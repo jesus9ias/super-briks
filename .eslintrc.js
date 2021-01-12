@@ -16,6 +16,7 @@ module.exports = {
     'class-methods-use-this': 0,
     'lines-between-class-members': ['error', 'always', { 'exceptAfterSingleLine': true }],
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'import/prefer-default-export': 0,
   },
   overrides: [
     {

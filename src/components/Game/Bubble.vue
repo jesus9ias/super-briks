@@ -13,93 +13,84 @@ import {
 } from 'vue-property-decorator';
 import { Vue } from 'vue-class-component';
 import state from './state';
-
-enum HIT {
-  NORTH = 1,
-  SOUTH = 2,
-  EAST = 3,
-  WEST = 4
-}
+import bubbleStage from './bubbleState';
+import { HitAngleFactor } from './HitAngleFactor';
 
 export default class Bubble extends Vue {
   @Prop({ default: 0 }) angle!: number;
 
   scenarioWidth = 1000;
   scenarioHeight = 500;
-  top = 480;
-  left = 490;
-  diameter = 20;
-  currentAngle = 0;
+  diameter = 10;
 
   readonly moveFactor = 1;
 
   get style() {
     return {
-      top: `${this.top}px`,
-      left: `${this.left}px`,
+      top: `${bubbleStage.top}px`,
+      left: `${bubbleStage.left}px`,
     };
   }
 
   created() {
-    this.currentAngle = this.angle;
+    bubbleStage.top = 490;
+    bubbleStage.left = 495;
+    bubbleStage.angle = this.angle;
   }
 
   get xMovement() {
-    return this.moveFactor * Math.cos(this.currentAngle * (Math.PI / 180));
+    return this.moveFactor * Math.cos(bubbleStage.angle * (Math.PI / 180));
   }
 
   get yMovement() {
-    return this.moveFactor * Math.sin(this.currentAngle * (Math.PI / 180));
+    return this.moveFactor * Math.sin(bubbleStage.angle * (Math.PI / 180));
   }
 
   get cicle() {
     return state.cicle;
   }
 
+  get lastAngleFactor() {
+    return bubbleStage.lastAngleFactor;
+  }
+
   private moveBubble() {
-    this.top -= this.yMovement;
-    this.left += this.xMovement;
-    //  console.log(this.left, this.top);
+    bubbleStage.top -= this.yMovement;
+    bubbleStage.left += this.xMovement;
   }
 
   private hitScenarioBorder() {
-    const northHit = this.top <= 0;
-    const southHit = this.top > this.scenarioHeight - this.diameter;
-    const eastHit = this.left <= 0;
-    const westHit = this.left > this.scenarioWidth - this.diameter;
+    const northHit = bubbleStage.top <= 0;
+    const southHit = bubbleStage.top > this.scenarioHeight - this.diameter;
+    const eastHit = bubbleStage.left <= 0;
+    const westHit = bubbleStage.left > this.scenarioWidth - this.diameter;
     if (northHit) {
-      this.changeAngleAfterBorderHit(HIT.NORTH);
+      this.changeAngleAfterBorderHit(HitAngleFactor.NORTH);
     }
     if (southHit) {
-      this.changeAngleAfterBorderHit(HIT.SOUTH);
+      this.changeAngleAfterBorderHit(HitAngleFactor.SOUTH);
     }
     if (eastHit) {
-      this.changeAngleAfterBorderHit(HIT.EAST);
+      this.changeAngleAfterBorderHit(HitAngleFactor.EAST);
     }
     if (westHit) {
-      this.changeAngleAfterBorderHit(HIT.WEST);
+      this.changeAngleAfterBorderHit(HitAngleFactor.WEST);
     }
   }
 
-  private changeAngleAfterBorderHit(borderHit: HIT) {
-    if (borderHit === HIT.NORTH) {
-      this.currentAngle = 270 + (90 - this.currentAngle);
-    }
-    if (borderHit === HIT.SOUTH) {
-      this.currentAngle = 90 + (270 - this.currentAngle);
-    }
-    if (borderHit === HIT.EAST) {
-      this.currentAngle = 180 + (360 - this.currentAngle);
-    }
-    if (borderHit === HIT.WEST) {
-      this.currentAngle = 0 + (180 - this.currentAngle);
-    }
+  private changeAngleAfterBorderHit(angleFactor: HitAngleFactor) {
+    bubbleStage.angle = angleFactor + 180 + (angleFactor - bubbleStage.angle);
   }
 
   @Watch('cicle')
-  onPropertyChanged() {
+  cicleChanged() {
     this.moveBubble();
     this.hitScenarioBorder();
+  }
+
+  @Watch('lastAngleFactor')
+  lastAngleFactorChanged() {
+    this.changeAngleAfterBorderHit(bubbleStage.lastAngleFactor);
   }
 }
 </script>
@@ -107,8 +98,8 @@ export default class Bubble extends Vue {
 <style scoped lang="scss">
   .bubble {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     border: 1px solid red;
   }

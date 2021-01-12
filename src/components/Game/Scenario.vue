@@ -1,30 +1,39 @@
 <template>
   <div class="scenario">
-   <brik top="0" left="0" />
-   <brik top="1" left="0" />
-   <brik top="2" left="0" />
-   <brik top="0" left="1" />
-   <brik top="1" left="1" />
-   <brik top="2" left="1" />
+   <brik
+    v-for="brik in loadedGame.briks"
+    :key="brik.id"
+    :top="brik.top"
+    :left="brik.left"
+    :score="brik.score"
+  />
 
    <bubble
-    angle="45"
+    :angle="startAngle"
+    :briks="loadedGame.briks"
   />
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
+import loadedGame from '../../../games/game3.json';
 import Brik from './Brik.vue';
 import Bubble from './Bubble.vue';
 
 @Options({
+  data() {
+    return {
+      loadedGame,
+    };
+  },
   components: {
     Brik,
     Bubble,
   },
 })
 export default class Scenario extends Vue {
+  public startAngle = 93;
 }
 </script>
 

@@ -1,0 +1,10 @@
+{
+  "briks": [
+    { "id": 1, "top": 0, "left": 0, "score": 1005 },
+    { "id": 2, "top": 1, "left": 0, "score": 1000 },
+    { "id": 3, "top": 2, "left": 0, "score": 1000 },
+    { "id": 4, "top": 0, "left": 1, "score": 1000 },
+    { "id": 5, "top": 1, "left": 1, "score": 1030 },
+    { "id": 6, "top": 2, "left": 1, "score": 1200 }
+  ]
+}
