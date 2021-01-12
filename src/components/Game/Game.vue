@@ -8,6 +8,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import Scenario from './Scenario.vue';
+import Timer from './Timer';
 
 @Options({
   components: {
@@ -15,6 +16,11 @@ import Scenario from './Scenario.vue';
   },
 })
 export default class Game extends Vue {
+  timer: Timer = new Timer();
+
+  created() {
+    this.timer.startGame();
+  }
 }
 </script>
 

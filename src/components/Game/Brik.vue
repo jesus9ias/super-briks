@@ -12,13 +12,14 @@ import {
   Prop,
 } from 'vue-property-decorator';
 import { Vue } from 'vue-class-component';
+import state from './state';
 
 export default class Brik extends Vue {
   @Prop({ default: 1000 }) score!: number;
-
   @Prop({ default: 0 }) top!: number;
-
   @Prop({ default: 0 }) left!: number;
+
+  gameState = state;
 
   get calculatedTop() {
     return this.top * 20;

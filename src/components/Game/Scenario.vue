@@ -6,16 +6,22 @@
    <brik top="0" left="1" />
    <brik top="1" left="1" />
    <brik top="2" left="1" />
+
+   <bubble
+    angle="45"
+  />
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import Brik from './Brik.vue';
+import Bubble from './Bubble.vue';
 
 @Options({
   components: {
     Brik,
+    Bubble,
   },
 })
 export default class Scenario extends Vue {
