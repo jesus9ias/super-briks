@@ -1,6 +1,5 @@
 <script lang="ts">
 import {
-  Prop,
   Watch,
 } from 'vue-property-decorator';
 import { Vue } from 'vue-class-component';
@@ -11,9 +10,6 @@ import SideHits from '../interfaces/SideHits';
 import { HitAngleFactor } from '../enums/HitAngleFactor';
 
 export default class TheHit extends Vue {
-  @Prop({ required: true }) briks!: Brik[];
-  @Prop({ required: true }) bubbles!: Bubble[];
-
   get cicle() {
     return state.cicle;
   }
@@ -24,8 +20,8 @@ export default class TheHit extends Vue {
   }
 
   private reviewForHits() {
-    this.briks.forEach((brik: Brik) => {
-      this.bubbles.forEach((bubble: Bubble) => {
+    state.briks.forEach((brik: Brik) => {
+      state.bubbles.forEach((bubble: Bubble) => {
         const hitsBySide = this.getSideHits(brik, bubble);
         this.processHit(hitsBySide, bubble, brik);
       });
@@ -63,6 +59,7 @@ export default class TheHit extends Vue {
       bubble.setLastBrik(brik.id);
       this.changeAngleByHitSide(hitsBySide, bubble);
       brik.updateScore(-1);
+      this.removeBrikIfPossible(brik);
     }
   }
 
@@ -85,6 +82,12 @@ export default class TheHit extends Vue {
     }
     if (hitsBySide.west) {
       bubble.updateAngleFactor(HitAngleFactor.EAST);
+    }
+  }
+
+  private removeBrikIfPossible(brik: Brik) {
+    if (brik.score <= 0) {
+      state.briks = state.briks.filter((b) => b.id !== brik.id);
     }
   }
 }

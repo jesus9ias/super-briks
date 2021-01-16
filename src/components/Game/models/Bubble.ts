@@ -9,7 +9,7 @@ export default class Bubble {
   public left: number;
   public angle: number;
   public lastAngleFactor = HitAngleFactor.NONE;
-  private lastHitBrik!: string;
+  private lastHitBrik?: string;
 
   constructor({
     top,

@@ -14,10 +14,7 @@
       :self-bubble="bubble"
     />
 
-    <the-hit
-      :briks="briks"
-      :bubbles="bubbles"
-    />
+    <the-hit />
     </div>
   </div>
 </template>
@@ -27,7 +24,7 @@ import { Options, Vue } from 'vue-class-component';
 import {
   Watch,
 } from 'vue-property-decorator';
-import loadedGame from '../../../games/game1.json';
+import loadedGame from '../../../games/game4.json';
 import TheHit from './elements/TheHit.vue';
 import TheBrik from './elements/TheBrik.vue';
 import TheBubble from './elements/TheBubble.vue';
@@ -74,7 +71,7 @@ export default class Scenario extends Vue {
   cicleChanged() {
     if (this.cicle % bubbleCreationFactor === 0) {
       this.createBubble();
-      this.removeLastBubble();
+      this.removeLastBubbleIfPossible();
     }
   }
 
@@ -88,9 +85,9 @@ export default class Scenario extends Vue {
     state.bubbles.push(bubble);
   }
 
-  private removeLastBubble() {
-    if (this.bubbles.length === maxAllowedBubbles) {
-      this.bubbles.shift();
+  private removeLastBubbleIfPossible() {
+    if (state.bubbles.length === maxAllowedBubbles) {
+      state.bubbles.shift();
     }
   }
 
