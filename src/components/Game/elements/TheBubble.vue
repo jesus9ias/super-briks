@@ -19,10 +19,10 @@ import state from '../state';
 export default class TheBubble extends Vue {
   @Prop({ required: true }) selfBubble!: Bubble;
 
-  scenarioWidth = 1000;
-  scenarioHeight = 500;
+  private scenarioWidth = 1000;
+  private scenarioHeight = 500;
 
-  readonly moveFactor = 1;
+  private readonly moveFactor = 5;
 
   get style() {
     return {

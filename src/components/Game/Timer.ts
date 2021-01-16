@@ -12,6 +12,6 @@ export default class Timer {
   private makeCicle() {
     this.timeOut = window.setInterval(() => {
       state.cicle += 1;
-    }, 1);
+    }, 10);
   }
 }

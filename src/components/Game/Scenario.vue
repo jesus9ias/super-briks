@@ -1,21 +1,24 @@
 <template>
   <div class="scenario">
-   <the-brik
-    v-for="brik in briks"
-    :key="brik.id"
-    :self-brik="brik"
-  />
+    <p>Total Bubbles: {{ bubbles.length }}</p>
+    <div class="scenario__container">
+    <the-brik
+      v-for="brik in briks"
+      :key="brik.id"
+      :self-brik="brik"
+    />
 
-   <the-bubble
-    v-for="(bubble, i) in bubbles"
-    :key="i"
-    :self-bubble="bubble"
-  />
+    <the-bubble
+      v-for="(bubble, i) in bubbles"
+      :key="i"
+      :self-bubble="bubble"
+    />
 
-   <the-hit
-    :briks="briks"
-    :bubbles="bubbles"
-  />
+    <the-hit
+      :briks="briks"
+      :bubbles="bubbles"
+    />
+    </div>
   </div>
 </template>
 
@@ -38,6 +41,9 @@ const bubbleBase = {
   left: 495,
   angle: 135,
 };
+
+const bubbleCreationFactor = 10;
+const maxAllowedBubbles = 101;
 
 @Options({
   data() {
@@ -66,8 +72,9 @@ export default class Scenario extends Vue {
 
   @Watch('cicle')
   cicleChanged() {
-    if (this.cicle % 1000 === 0) {
+    if (this.cicle % bubbleCreationFactor === 0) {
       this.createBubble();
+      this.removeLastBubble();
     }
   }
 
@@ -76,21 +83,27 @@ export default class Scenario extends Vue {
     this.createBubble();
   }
 
+  private createBubble() {
+    const bubble = new Bubble(bubbleBase);
+    state.bubbles.push(bubble);
+  }
+
+  private removeLastBubble() {
+    if (this.bubbles.length === maxAllowedBubbles) {
+      this.bubbles.shift();
+    }
+  }
+
   private loadBriks() {
     loadedGame.briks.forEach((gameBrik: GameBrikInterface) => {
       state.briks.push(new Brik(gameBrik));
     });
   }
-
-  private createBubble() {
-    const bubble = new Bubble(bubbleBase);
-    state.bubbles.push(bubble);
-  }
 }
 </script>
 
 <style scoped lang="scss">
-  .scenario {
+  .scenario__container {
     position: relative;
     margin: auto;
     width: 1000px;
