@@ -1,8 +1,14 @@
 import { reactive } from 'vue';
+import Bubble from './models/Bubble';
+import Brik from './models/Brik';
 
-// reactive state
+const voidBubbles: Bubble[] = [];
+const voideBriks: Brik[] = [];
+
 const state = reactive({
   cicle: 0,
+  bubbles: voidBubbles,
+  briks: voideBriks,
 });
 
 export default state;

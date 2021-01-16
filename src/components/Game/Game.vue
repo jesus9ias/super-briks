@@ -16,7 +16,7 @@ import Timer from './Timer';
   },
 })
 export default class Game extends Vue {
-  timer: Timer = new Timer();
+  private timer = new Timer();
 
   created() {
     this.timer.startGame();
