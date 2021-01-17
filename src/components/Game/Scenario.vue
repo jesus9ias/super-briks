@@ -1,7 +1,11 @@
 <template>
   <div class="scenario">
     <p>Total Bubbles: {{ bubbles.length }}</p>
-    <div class="scenario__container">
+    <div
+      ref="scenario"
+      class="scenario__container"
+      :style="style"
+    >
     <the-brik
       v-for="brik in briks"
       :key="brik.id"
@@ -24,7 +28,16 @@ import { Options, Vue } from 'vue-class-component';
 import {
   Watch,
 } from 'vue-property-decorator';
-import loadedGame from '../../../games/game4.json';
+import loadedGame from '../../../games/game2.json';
+import {
+  BRIK_LENGTH,
+  SCENARIO_ROWS,
+  ANGLE_REFERENCE,
+  BUBBLE_DIAMETER,
+  SCENARIO_COLUMNS,
+  MAX_ALLOWED_BUBBLES,
+  BUBBLE_CREATION_FACTOR,
+} from './constants';
 import TheHit from './elements/TheHit.vue';
 import TheBrik from './elements/TheBrik.vue';
 import TheBubble from './elements/TheBubble.vue';
@@ -32,15 +45,6 @@ import Brik from './models/Brik';
 import Bubble from './models/Bubble';
 import GameBrikInterface from './interfaces/GameBrik';
 import state from './state';
-
-const bubbleBase = {
-  top: 490,
-  left: 495,
-  angle: 135,
-};
-
-const bubbleCreationFactor = 10;
-const maxAllowedBubbles = 101;
 
 @Options({
   data() {
@@ -55,6 +59,20 @@ const maxAllowedBubbles = 101;
   },
 })
 export default class Scenario extends Vue {
+  $refs!: {
+    scenario: HTMLFormElement;
+  };
+
+  private readonly scenarioWidth = SCENARIO_COLUMNS * BRIK_LENGTH;
+  private readonly scenarioHeight = SCENARIO_ROWS * BRIK_LENGTH;
+  private readonly atMiddleScenario = 2;
+
+  private bubbleBase = {
+    top: this.scenarioHeight - BUBBLE_DIAMETER,
+    left: (this.scenarioWidth / this.atMiddleScenario) - (BUBBLE_DIAMETER / 2),
+    angle: 135,
+  };
+
   get bubbles() {
     return state.bubbles;
   }
@@ -67,9 +85,16 @@ export default class Scenario extends Vue {
     return state.cicle;
   }
 
+  get style() {
+    return {
+      width: `${this.scenarioWidth}px`,
+      height: `${this.scenarioHeight}px`,
+    };
+  }
+
   @Watch('cicle')
   cicleChanged() {
-    if (this.cicle % bubbleCreationFactor === 0) {
+    if (this.cicle % BUBBLE_CREATION_FACTOR === 0) {
       this.createBubble();
       this.removeLastBubbleIfPossible();
     }
@@ -80,15 +105,27 @@ export default class Scenario extends Vue {
     this.createBubble();
   }
 
+  mounted() {
+    this.$refs.scenario.addEventListener('mousemove', this.updateStartAngle);
+  }
+
   private createBubble() {
-    const bubble = new Bubble(bubbleBase);
+    const bubble = new Bubble(this.bubbleBase);
     state.bubbles.push(bubble);
   }
 
   private removeLastBubbleIfPossible() {
-    if (state.bubbles.length === maxAllowedBubbles) {
+    if (state.bubbles.length > MAX_ALLOWED_BUBBLES) {
       state.bubbles.shift();
     }
+  }
+
+  private updateStartAngle(event: MouseEvent) {
+    const deltaY = event.offsetY - this.scenarioHeight;
+    const deltaX = event.offsetX - this.scenarioWidth / this.atMiddleScenario;
+    const radiansToDegrees = (ANGLE_REFERENCE / Math.PI);
+    const angle = Math.abs(Math.atan2(deltaY, deltaX) * radiansToDegrees);
+    this.bubbleBase.angle = angle;
   }
 
   private loadBriks() {
@@ -103,8 +140,6 @@ export default class Scenario extends Vue {
   .scenario__container {
     position: relative;
     margin: auto;
-    width: 1000px;
-    height: 500px;
     border: 1px solid black;
   }
 </style>

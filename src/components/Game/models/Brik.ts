@@ -1,9 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 import GameBrikInterface from '../interfaces/GameBrik';
+import {
+  BRIK_LENGTH,
+} from '../constants';
 
 export default class Brik {
   public readonly id = uuidv4();
-  public readonly brikLength = 20;
+  public readonly brikLength = BRIK_LENGTH;
   public top: number;
   public left: number;
   public score: number;

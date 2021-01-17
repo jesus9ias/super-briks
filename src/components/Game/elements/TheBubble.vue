@@ -15,28 +15,36 @@ import { Vue } from 'vue-class-component';
 import Bubble from '../models/Bubble';
 import { HitAngleFactor } from '../enums/HitAngleFactor';
 import state from '../state';
+import {
+  BRIK_LENGTH,
+  SCENARIO_ROWS,
+  ANGLE_REFERENCE,
+  BUBBLE_DIAMETER,
+  SCENARIO_COLUMNS,
+  BUBBLE_MOVE_FACTOR,
+} from '../constants';
 
 export default class TheBubble extends Vue {
   @Prop({ required: true }) selfBubble!: Bubble;
 
-  private scenarioWidth = 1000;
-  private scenarioHeight = 500;
-
-  private readonly moveFactor = 5;
+  private readonly scenarioWidth = SCENARIO_COLUMNS * BRIK_LENGTH;
+  private readonly scenarioHeight = SCENARIO_ROWS * BRIK_LENGTH;
 
   get style() {
     return {
       top: `${this.selfBubble.top}px`,
       left: `${this.selfBubble.left}px`,
+      width: `${BUBBLE_DIAMETER}px`,
+      height: `${BUBBLE_DIAMETER}px`,
     };
   }
 
   get xMovement() {
-    return this.moveFactor * Math.cos(this.selfBubble.angle * (Math.PI / 180));
+    return BUBBLE_MOVE_FACTOR * Math.cos(this.selfBubble.angle * (Math.PI / ANGLE_REFERENCE));
   }
 
   get yMovement() {
-    return this.moveFactor * Math.sin(this.selfBubble.angle * (Math.PI / 180));
+    return BUBBLE_MOVE_FACTOR * Math.sin(this.selfBubble.angle * (Math.PI / ANGLE_REFERENCE));
   }
 
   get cicle() {
@@ -78,7 +86,8 @@ export default class TheBubble extends Vue {
   }
 
   private changeAngleAfterBorderHit(angleFactor: HitAngleFactor) {
-    this.selfBubble.angle = angleFactor + 180 + (angleFactor - this.selfBubble.angle);
+    const angleChange = angleFactor + ANGLE_REFERENCE;
+    this.selfBubble.angle = angleChange + (angleFactor - this.selfBubble.angle);
   }
 }
 </script>
@@ -86,8 +95,6 @@ export default class TheBubble extends Vue {
 <style scoped lang="scss">
   .bubble {
     position: absolute;
-    width: 10px;
-    height: 10px;
     border-radius: 50%;
     border: 1px solid red;
   }

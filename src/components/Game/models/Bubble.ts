@@ -1,10 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
 import BaseBubble from '../interfaces/BaseBubble';
 import { HitAngleFactor } from '../enums/HitAngleFactor';
+import {
+  BUBBLE_DIAMETER,
+} from '../constants';
 
 export default class Bubble {
   public readonly id = uuidv4();
-  public readonly diameter = 10;
+  public readonly diameter = BUBBLE_DIAMETER;
   public top: number;
   public left: number;
   public angle: number;

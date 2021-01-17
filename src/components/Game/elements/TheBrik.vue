@@ -12,23 +12,29 @@ import {
   Prop,
 } from 'vue-property-decorator';
 import { Vue } from 'vue-class-component';
+import {
+  BRIK_LENGTH,
+} from '../constants';
 import Brik from '../models/Brik';
 
 export default class TheBrik extends Vue {
   @Prop({ required: true }) selfBrik!: Brik;
 
   get calculatedTop() {
-    return this.selfBrik.top * this.selfBrik.brikLength;
+    return this.selfBrik.top * BRIK_LENGTH;
   }
 
   get calculatedLeft() {
-    return this.selfBrik.left * this.selfBrik.brikLength;
+    return this.selfBrik.left * BRIK_LENGTH;
   }
 
   get style() {
     return {
       top: `${this.calculatedTop}px`,
       left: `${this.calculatedLeft}px`,
+      width: `${BRIK_LENGTH}px`,
+      height: `${BRIK_LENGTH}px`,
+      lineHeight: `${BRIK_LENGTH}px`,
     };
   }
 }
@@ -37,9 +43,6 @@ export default class TheBrik extends Vue {
 <style scoped lang="scss">
   .brik {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    line-height: 20px;
     font-size: 9px;
     text-align: center;
     border: 1px solid black;
