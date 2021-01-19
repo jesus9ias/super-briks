@@ -6,19 +6,19 @@
       class="scenario__container"
       :style="style"
     >
-    <the-brik
-      v-for="brik in briks"
-      :key="brik.id"
-      :self-brik="brik"
-    />
+      <the-brik
+        v-for="brik in briks"
+        :key="brik.id"
+        :self-brik="brik"
+      />
 
-    <the-bubble
-      v-for="(bubble, i) in bubbles"
-      :key="i"
-      :self-bubble="bubble"
-    />
+      <the-bubble
+        v-for="(bubble, i) in bubbles"
+        :key="i"
+        :self-bubble="bubble"
+      />
 
-    <the-hit />
+      <the-hit />
     </div>
   </div>
 </template>
@@ -28,7 +28,7 @@ import { Options, Vue } from 'vue-class-component';
 import {
   Watch,
 } from 'vue-property-decorator';
-import loadedGame from '../../../games/game2.json';
+import loadedGame from '../../../games/all_covered.json';
 import {
   BRIK_LENGTH,
   SCENARIO_ROWS,

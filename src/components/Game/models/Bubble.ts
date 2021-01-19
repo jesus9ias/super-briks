@@ -7,10 +7,10 @@ import {
 
 export default class Bubble {
   public readonly id = uuidv4();
-  public readonly diameter = BUBBLE_DIAMETER;
   public top: number;
   public left: number;
   public angle: number;
+  public diameter: number;
   public lastAngleFactor = HitAngleFactor.NONE;
   private lastHitBrik?: string;
 
@@ -18,10 +18,11 @@ export default class Bubble {
     top,
     left,
     angle,
-  }: BaseBubble) {
+  }: BaseBubble, diameter = BUBBLE_DIAMETER) {
     this.top = top;
     this.left = left;
     this.angle = angle;
+    this.diameter = diameter;
   }
 
   public moveBubble(xMovement: number, yMovement: number) {
@@ -39,5 +40,12 @@ export default class Bubble {
 
   public updateAngleFactor(angleFactor: HitAngleFactor) {
     this.lastAngleFactor = angleFactor;
+  }
+
+  public getDetectableArea() {
+    const top = this.top - 95;
+    const left = this.left - 95;
+    const angle = 0;
+    return new Bubble({ top, left, angle }, 200);
   }
 }

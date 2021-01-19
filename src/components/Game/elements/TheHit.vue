@@ -10,18 +10,57 @@ import SideHits from '../interfaces/SideHits';
 import { HitAngleFactor } from '../enums/HitAngleFactor';
 
 export default class TheHit extends Vue {
+  public collisionableBriks: Brik[] = [];
+  public collisionableBubbles: Bubble[] = [];
+
   get cicle() {
     return state.cicle;
   }
 
   @Watch('cicle')
   cicleChanged() {
+    this.detectCollisionableElements();
     this.reviewForHits();
   }
 
-  private reviewForHits() {
-    state.briks.forEach((brik: Brik) => {
+  private detectCollisionableElements() {
+    if (this.cicle % 20 === 0) {
+      this.collisionableBriks = [];
+      this.collisionableBubbles = [];
       state.bubbles.forEach((bubble: Bubble) => {
+        const detectableBubbleArea = bubble.getDetectableArea();
+        let foundAtLeastOneBrik = false;
+        state.briks.forEach((brik: Brik) => {
+          const isIntoArea = this.isBrikIntoArea(brik, detectableBubbleArea);
+          if (isIntoArea) {
+            foundAtLeastOneBrik = true;
+            if (!this.collisionableBriks.find((b) => b.id === brik.id)) {
+              this.collisionableBriks.push(brik);
+            }
+          }
+        });
+        if (foundAtLeastOneBrik) {
+          this.collisionableBubbles.push(bubble);
+        }
+      });
+    }
+  }
+
+  private isBrikIntoArea(brik: Brik, bubble: Bubble) {
+    const brikTop = brik.top * brik.brikLength;
+    const brikLeft = brik.left * brik.brikLength;
+    const brikHeight = brikTop + brik.brikLength;
+    const brikWidth = brikLeft + brik.brikLength;
+    const bubbleHeight = bubble.top + bubble.diameter;
+    const bubbleWidth = bubble.left + bubble.diameter;
+
+    return brikTop >= bubble.top && brikHeight <= bubbleHeight
+      && brikLeft >= bubble.left && brikWidth <= bubbleWidth;
+  }
+
+  private reviewForHits() {
+    this.collisionableBriks.forEach((brik: Brik) => {
+      this.collisionableBubbles.forEach((bubble: Bubble) => {
         const hitsBySide = this.getSideHits(brik, bubble);
         this.processHit(hitsBySide, bubble, brik);
       });
