@@ -28,7 +28,7 @@ import { Options, Vue } from 'vue-class-component';
 import {
   Watch,
 } from 'vue-property-decorator';
-import loadedGame from '../../../games/all_covered.json';
+import loadedGame from '../../../games/game2.json';
 import {
   BRIK_LENGTH,
   SCENARIO_ROWS,
@@ -37,6 +37,7 @@ import {
   SCENARIO_COLUMNS,
   MAX_ALLOWED_BUBBLES,
   BUBBLE_CREATION_FACTOR,
+  CONTINUOUS_CREATE_BUBBLES,
 } from './constants';
 import TheHit from './elements/TheHit.vue';
 import TheBrik from './elements/TheBrik.vue';
@@ -70,7 +71,7 @@ export default class Scenario extends Vue {
   private bubbleBase = {
     top: this.scenarioHeight - BUBBLE_DIAMETER,
     left: (this.scenarioWidth / this.atMiddleScenario) - (BUBBLE_DIAMETER / 2),
-    angle: 135,
+    angle: 90,
   };
 
   get bubbles() {
@@ -95,8 +96,12 @@ export default class Scenario extends Vue {
   @Watch('cicle')
   cicleChanged() {
     if (this.cicle % BUBBLE_CREATION_FACTOR === 0) {
-      this.createBubble();
-      this.removeLastBubbleIfPossible();
+      if (CONTINUOUS_CREATE_BUBBLES) {
+        this.createBubble();
+        this.removeLastBubbleIfPossible();
+      } else if (state.bubbles.length < MAX_ALLOWED_BUBBLES) {
+        this.createBubble();
+      }
     }
   }
 

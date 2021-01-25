@@ -11,8 +11,8 @@ export default class Bubble {
   public left: number;
   public angle: number;
   public diameter: number;
+  public lastHitBrik = '';
   public lastAngleFactor = HitAngleFactor.NONE;
-  private lastHitBrik?: string;
 
   constructor({
     top,
@@ -36,6 +36,10 @@ export default class Bubble {
 
   public isSameBrik(brikId: string) {
     return this.lastHitBrik === brikId;
+  }
+
+  public updateAngle(angle: number) {
+    this.angle = angle;
   }
 
   public updateAngleFactor(angleFactor: HitAngleFactor) {

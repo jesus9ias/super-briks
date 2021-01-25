@@ -1,18 +1,18 @@
 {
   "briks": [
-    { "id": 1, "top": 0, "left": 23, "score": 1000 },
-    { "id": 2, "top": 1, "left": 23, "score": 1000 },
-    { "id": 3, "top": 2, "left": 23, "score": 1000 },
-    { "id": 4, "top": 3, "left": 23, "score": 1000 },
-    { "id": 5, "top": 4, "left": 23, "score": 1000 },
-    { "id": 6, "top": 5, "left": 23, "score": 1000 },
-    { "id": 7, "top": 6, "left": 23, "score": 1000 },
-    { "id": 8, "top": 0, "left": 25, "score": 1000 },
-    { "id": 9, "top": 1, "left": 25, "score": 1000 },
-    { "id": 10, "top": 2, "left": 25, "score": 1000 },
-    { "id": 12, "top": 3, "left": 25, "score": 1000 },
-    { "id": 13, "top": 4, "left": 25, "score": 1000 },
-    { "id": 14, "top": 5, "left": 25, "score": 1000 },
-    { "id": 15, "top": 6, "left": 25, "score": 1000 }
+    { "top": 0, "left": 11, "score": 1000 },
+    { "top": 1, "left": 11, "score": 1000 },
+    { "top": 2, "left": 11, "score": 1000 },
+    { "top": 3, "left": 11, "score": 1000 },
+    { "top": 4, "left": 11, "score": 1000 },
+    { "top": 5, "left": 11, "score": 1000 },
+    { "top": 6, "left": 11, "score": 1000 },
+    { "top": 0, "left": 13, "score": 1000 },
+    { "top": 1, "left": 13, "score": 1000 },
+    { "top": 2, "left": 13, "score": 1000 },
+    { "top": 3, "left": 13, "score": 1000 },
+    { "top": 4, "left": 13, "score": 1000 },
+    { "top": 5, "left": 13, "score": 1000 },
+    { "top": 6, "left": 13, "score": 1000 }
   ]
 }
