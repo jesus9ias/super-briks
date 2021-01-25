@@ -1,11 +1,3 @@
-<template>
-  <div>
-    {{ collisionableBriks.length }}
-    -
-    {{ collisionableBubbles.length }}
-  </div>
-</template>
-
 <script lang="ts">
 import {
   Watch,
