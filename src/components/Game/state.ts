@@ -9,6 +9,7 @@ const state = reactive({
   cicle: 0,
   bubbles: voidBubbles,
   briks: voideBriks,
+  earnedPoints: 0,
 });
 
 export default state;

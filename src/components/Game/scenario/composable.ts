@@ -4,7 +4,6 @@ import {
   computed,
   onMounted,
 } from 'vue';
-import loadedGame from '../../../../games/game2.json';
 import Brik from '../models/Brik';
 import Bubble from '../models/Bubble';
 import GameBrikInterface from '../interfaces/GameBrik';
@@ -27,7 +26,7 @@ const atMiddleScenario = 2;
 const bubbleBase = {
   top: scenarioHeight - BUBBLE_DIAMETER,
   left: (scenarioWidth / atMiddleScenario) - (BUBBLE_DIAMETER / 2),
-  angle: 90,
+  angle: 45,
 };
 
 const style = {
@@ -35,7 +34,7 @@ const style = {
   height: `${scenarioHeight}px`,
 };
 
-export default () => {
+export default (gameBriks: GameBrikInterface[]) => {
   const bubbles = computed(() => state.bubbles);
   const briks = computed(() => state.briks);
 
@@ -53,7 +52,7 @@ export default () => {
   };
 
   const loadBriks = () => {
-    loadedGame.briks.forEach((gameBrik: GameBrikInterface) => {
+    gameBriks.forEach((gameBrik: GameBrikInterface) => {
       state.briks.push(new Brik(gameBrik));
     });
   };
@@ -78,7 +77,6 @@ export default () => {
   });
 
   onMounted(() => {
-    console.log('mounted in the composition api!');
     loadBriks();
     createBubble();
   });
@@ -88,7 +86,6 @@ export default () => {
     style,
     briks,
     bubbles,
-    loadedGame,
     updateStartAngle,
   };
 };

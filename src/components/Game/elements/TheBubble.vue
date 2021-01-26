@@ -12,9 +12,6 @@ import {
 } from 'vue-property-decorator';
 import { Vue } from 'vue-class-component';
 import Bubble from '../models/Bubble';
-import {
-  BUBBLE_DIAMETER,
-} from '../constants';
 
 export default class TheBubble extends Vue {
   @Prop({ required: true }) selfBubble!: Bubble;
@@ -23,8 +20,8 @@ export default class TheBubble extends Vue {
     return {
       top: `${this.selfBubble.top}px`,
       left: `${this.selfBubble.left}px`,
-      width: `${BUBBLE_DIAMETER}px`,
-      height: `${BUBBLE_DIAMETER}px`,
+      width: `${this.selfBubble.diameter}px`,
+      height: `${this.selfBubble.diameter}px`,
       backgroundColor: this.selfBubble.background,
     };
   }

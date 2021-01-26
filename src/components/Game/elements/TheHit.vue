@@ -125,6 +125,7 @@ export default class TheHit extends Vue {
       bubble.setLastBrik(brik.id);
       this.changeAngleByHitSide(hitsBySide, bubble);
       brik.updateScore(-1);
+      state.earnedPoints += 1;
       this.removeBrikIfPossible(brik);
     }
   }

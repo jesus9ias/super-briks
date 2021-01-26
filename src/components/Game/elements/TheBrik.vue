@@ -43,7 +43,7 @@ export default class TheBrik extends Vue {
 <style scoped lang="scss">
   .brik {
     position: absolute;
-    font-size: 9px;
+    font-size: 8px;
     text-align: center;
     border: 1px solid black;
     background: burlywood;

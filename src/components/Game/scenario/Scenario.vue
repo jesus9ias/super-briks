@@ -1,6 +1,5 @@
 <template>
-  <div class="scene">
-    <p>Total Bubbles: {{ scene.bubbles.length }}</p>
+  <div class="scenario">
     <div
       ref="scenario"
       class="scenario__container"
@@ -24,10 +23,12 @@
 </template>
 
 <script lang="ts">
+import { Prop } from 'vue-property-decorator';
 import { Options, setup, Vue } from 'vue-class-component';
 import TheHit from '../elements/TheHit.vue';
 import TheBrik from '../elements/TheBrik.vue';
 import TheBubble from '../elements/TheBubble.vue';
+import AGame from '../interfaces/AGame';
 import ScenarioComposable from './composable';
 
 @Options({
@@ -42,7 +43,9 @@ export default class Scenario extends Vue {
     scenario: HTMLFormElement;
   };
 
-  public scene = setup(() => ScenarioComposable());
+  @Prop({ required: true }) theGame!: AGame;
+
+  public scene = setup(() => ScenarioComposable(this.theGame.briks));
 
   mounted() {
     this.$refs.scenario.addEventListener('mousemove', this.scene.updateStartAngle);
@@ -51,9 +54,12 @@ export default class Scenario extends Vue {
 </script>
 
 <style scoped lang="scss">
-  .scenario__container {
-    position: relative;
-    margin: auto;
-    border: 1px solid black;
+  .scenario {
+    margin-top: 10px;
+    &__container {
+      position: relative;
+      margin: auto;
+      border: 1px solid black;
+    }
   }
 </style>
