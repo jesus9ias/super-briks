@@ -14,7 +14,7 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'class-methods-use-this': 0,
-    'lines-between-class-members': ['error', 'always', { 'exceptAfterSingleLine': true }],
+    'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'import/prefer-default-export': 0,
   },

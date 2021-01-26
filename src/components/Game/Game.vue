@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import Scenario from './Scenario.vue';
+import Scenario from './scenario/Scenario.vue';
 import Timer from './Timer';
 
 @Options({

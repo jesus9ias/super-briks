@@ -3,4 +3,4 @@ export default interface SideHits {
   south: boolean;
   east: boolean;
   west: boolean;
-}
+};
