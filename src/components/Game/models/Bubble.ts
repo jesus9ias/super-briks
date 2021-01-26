@@ -4,6 +4,7 @@ import { HitAngleFactor } from '../enums/HitAngleFactor';
 import {
   BUBBLE_DIAMETER,
 } from '../constants';
+import colorizer from '../modules/colorizer';
 
 export default class Bubble {
   public readonly id = uuidv4();
@@ -13,6 +14,7 @@ export default class Bubble {
   public diameter: number;
   public lastHitBrik = '';
   public lastAngleFactor = HitAngleFactor.NONE;
+  public readonly background = colorizer();
 
   constructor({
     top,

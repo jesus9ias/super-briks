@@ -25,6 +25,7 @@ export default class TheBubble extends Vue {
       left: `${this.selfBubble.left}px`,
       width: `${BUBBLE_DIAMETER}px`,
       height: `${BUBBLE_DIAMETER}px`,
+      backgroundColor: this.selfBubble.background,
     };
   }
 }
@@ -34,6 +35,6 @@ export default class TheBubble extends Vue {
   .bubble {
     position: absolute;
     border-radius: 50%;
-    border: 1px solid red;
+    border: 1px solid black;
   }
 </style>

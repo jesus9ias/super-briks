@@ -46,6 +46,7 @@ export default class TheBrik extends Vue {
     font-size: 9px;
     text-align: center;
     border: 1px solid black;
+    background: burlywood;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
